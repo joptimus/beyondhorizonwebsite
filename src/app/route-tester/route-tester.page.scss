@@ -1,0 +1,130 @@
+.route-tester {
+  --ion-background-color: var(--ion-color-step-50);
+
+  .elev {
+    border-radius: 16px;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+    backdrop-filter: saturate(1.2);
+  }
+
+  ion-card-subtitle {
+    opacity: 0.8;
+  }
+
+  .form {
+    .metric-item {
+      margin-bottom: 6px;
+      ion-label { font-weight: 600; }
+    }
+    ion-segment {
+      border-radius: 12px;
+      margin-top: 4px;
+    }
+  }
+
+  .status {
+    margin-top: 8px;
+    border-radius: 12px;
+    --background: var(--ion-color-light);
+    &.muted {
+      --background: transparent;
+      ion-label { opacity: 0.9; }
+    }
+  }
+
+  .stats {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+    ion-chip {
+      border-radius: 12px;
+      ion-icon { margin-right: 6px; }
+    }
+  }
+
+  /* Table styling */
+  .table-wrap {
+    width: 100%;
+    overflow: auto;
+    border-radius: 12px;
+    border: 1px solid rgba(0,0,0,0.06);
+    background: var(--ion-color-step-100, #fff);
+  }
+
+  .table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 14px;
+
+    thead th {
+      position: sticky;
+      top: 0;
+      background: var(--ion-color-light);
+      text-align: left;
+      padding: 10px 12px;
+      font-weight: 700;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      z-index: 1;
+    }
+
+    tbody td {
+      padding: 10px 12px;
+      border-bottom: 1px dashed rgba(0,0,0,0.06);
+    }
+
+    tbody tr:hover {
+      background: color-mix(in srgb, var(--ion-color-primary) 6%, transparent);
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+  }
+
+  /* Compact, readable on phones: turn rows into cards */
+  @media (max-width: 640px) {
+    .table { display: block; }
+    .table thead { display: none; }
+    .table tbody { display: grid; gap: 8px; padding: 8px; }
+    .table tbody tr {
+      display: grid;
+      gap: 4px;
+      padding: 10px;
+      border: 1px solid rgba(0,0,0,0.06);
+      border-radius: 10px;
+      background: var(--ion-background-color-step-50, #fff);
+    }
+    .table tbody td {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      align-items: center;
+      border: none !important;
+      padding: 6px 0;
+    }
+    .table tbody td::before {
+      content: attr(data-col);
+      font-weight: 600;
+      opacity: 0.75;
+    }
+  }
+
+  /* Dark mode touches */
+  @media (prefers-color-scheme: dark) {
+    .elev {
+      box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+    }
+    .table-wrap {
+      border-color: rgba(255,255,255,0.06);
+      background: var(--ion-color-step-100);
+    }
+    .table thead th {
+      background: var(--ion-color-step-150);
+      border-bottom-color: rgba(255,255,255,0.08);
+    }
+    .table tbody td {
+      border-bottom-color: rgba(255,255,255,0.06);
+    }
+  }
+}

@@ -1,3 +1,16 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-router-outlet>  <nav class="top-nav">
+  <a routerLink="/">Home</a>
+  <a routerLink="/route-tester">Route Tester</a>
+  <a routerLink="/star-map">Star Map</a>
+</nav></ion-router-outlet>
+
+
+
+<style>
+.top-nav { display:flex; gap:1rem; padding:.75rem 1rem; border-bottom:1px solid #eee; }
+.top-nav a { text-decoration:none; color:#1976d2; }
+.top-nav a:hover { text-decoration:underline; }
+</style>
+
 </ion-app>
