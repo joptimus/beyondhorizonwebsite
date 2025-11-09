@@ -19,6 +19,7 @@
           <ion-card-content>
             <form (ngSubmit)="run()" class="form">
               <ion-row class="ion-gutter">
+
                 <ion-col size="12" size-md="6">
                   <ion-item fill="outline">
                     <ion-label position="stacked">From ID</ion-label>
@@ -44,6 +45,14 @@
                 </ion-col>
 
                 <ion-col size="12" size-md="6">
+                  <ion-item fill="outline">
+                    <ion-label position="stacked">API Key <ion-note>(optional)</ion-note></ion-label>
+                    <ion-input type="password" [(ngModel)]="apiKey" name="apiKey"
+                               placeholder="X-API-Key"></ion-input>
+                  </ion-item>
+                </ion-col>
+
+                <ion-col size="12" size-md="6">
                   <ion-item lines="none" class="metric-label">
                     <ion-label>Metric</ion-label>
                   </ion-item>
@@ -57,6 +66,20 @@
                   </ion-segment>
                 </ion-col>
 
+                <ion-col size="12" size-md="6">
+                  <ion-item lines="none" class="metric-label">
+                    <ion-label>Optimize</ion-label>
+                  </ion-item>
+                  <ion-segment [(ngModel)]="optimize" name="optimize">
+                    <ion-segment-button value="distance">
+                      <ion-label>Distance</ion-label>
+                    </ion-segment-button>
+                    <ion-segment-button value="hops">
+                      <ion-label>Fewest Jumps</ion-label>
+                    </ion-segment-button>
+                  </ion-segment>
+                </ion-col>
+
                 <ion-col size="12" class="ion-margin-top">
                   <ion-button type="submit" color="primary" expand="block"
                               (click)="run()" [disabled]="loading()">
@@ -64,9 +87,11 @@
                     Compute & Draw
                   </ion-button>
                 </ion-col>
+
               </ion-row>
             </form>
 
+            <!-- statuses -->
             <ion-item lines="none" class="status muted"
                       *ngIf="!route()?.hops?.length && !error()">
               <ion-icon name="information-circle-outline" slot="start"></ion-icon>
@@ -81,13 +106,37 @@
         </ion-card>
 
         <!-- Canvas Card -->
-        <ion-card class="elev canvas-card">
+        <ion-card class="elev canvas-card" *ngIf="route() as r">
           <ion-card-header>
             <ion-card-title>Map</ion-card-title>
           </ion-card-header>
 
           <ion-card-content>
-            <!-- Overlay controls -->
+            <!-- Result chips -->
+            <div class="stats" *ngIf="r.ok">
+              <ion-chip outline>
+                <ion-icon name="bar-chart-outline"></ion-icon>
+                <ion-label>Metric: {{ r.metric || metric }}</ion-label>
+              </ion-chip>
+              <ion-chip outline>
+                <ion-icon name="options-outline"></ion-icon>
+                <ion-label>Optimize: {{ r.optimize || optimize }}</ion-label>
+              </ion-chip>
+              <ion-chip outline color="primary" *ngIf="r.hopCount != null">
+                <ion-icon name="swap-horizontal-outline"></ion-icon>
+                <ion-label>Hops: {{ r.hopCount }}</ion-label>
+              </ion-chip>
+              <ion-chip outline color="tertiary" *ngIf="r.totalDistance != null">
+                <ion-icon name="resize-outline"></ion-icon>
+                <ion-label>Total: {{ r.totalDistance | number:'1.2-4' }}</ion-label>
+              </ion-chip>
+              <ion-chip outline *ngIf="r.maxEdgeLength != null">
+                <ion-icon name="planet-outline"></ion-icon>
+                <ion-label>Max Edge: {{ r.maxEdgeLength }}</ion-label>
+              </ion-chip>
+            </div>
+
+            <!-- Canvas toolbar -->
             <div class="canvas-toolbar">
               <ion-button size="small" fill="clear" (click)="centerView()" title="Center">
                 <ion-icon name="scan-outline"></ion-icon>
@@ -100,28 +149,17 @@
               </ion-button>
             </div>
 
-            <!-- Canvas wrapper -->
+            <!-- Canvas -->
             <div class="canvas-wrap">
               <canvas #canvas></canvas>
-
-              <!-- Legend -->
-              <div class="legend">
-                <ion-chip outline>
-                  <ion-icon name="ellipse-outline"></ion-icon>
-                  <ion-label>Systems</ion-label>
-                </ion-chip>
-                <ion-chip outline color="primary">
-                  <ion-icon name="trending-up-outline"></ion-icon>
-                  <ion-label>Route</ion-label>
-                </ion-chip>
-                <ion-chip outline color="tertiary">
-                  <ion-icon name="swap-horizontal-outline"></ion-icon>
-                  <ion-label>Jumps</ion-label>
-                </ion-chip>
-              </div>
             </div>
 
             <p class="hint ion-text-center">Scroll to zoom. Drag to pan.</p>
+
+            <ion-item color="danger" lines="none" class="status" *ngIf="!r.ok">
+              <ion-icon name="close-circle" slot="start"></ion-icon>
+              <ion-label>Request failed: {{ r.error }}</ion-label>
+            </ion-item>
           </ion-card-content>
         </ion-card>
 

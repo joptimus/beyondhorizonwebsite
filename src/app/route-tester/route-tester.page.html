@@ -9,7 +9,7 @@
     <ion-row class="ion-justify-content-center ion-margin-top">
       <ion-col size="12" size-md="10" size-lg="8">
 
-        <!-- Form Card -->
+        <!-- Form -->
         <ion-card class="elev">
           <ion-card-header>
             <ion-card-title>Compute Route</ion-card-title>
@@ -19,6 +19,7 @@
           <ion-card-content>
             <form (ngSubmit)="run()" class="form">
               <ion-row class="ion-gutter">
+
                 <ion-col size="12" size-md="6">
                   <ion-item fill="outline">
                     <ion-label position="stacked">From ID</ion-label>
@@ -35,9 +36,18 @@
 
                 <ion-col size="12" size-md="6">
                   <ion-item fill="outline">
-                    <ion-label position="stacked">Ship Jump Max <ion-note>(optional)</ion-note></ion-label>
-                    <ion-input type="number" inputmode="decimal" placeholder="e.g. 5.0"
+                    <ion-label position="stacked">
+                      Ship Jump Max <ion-note>(optional)</ion-note>
+                    </ion-label>
+                    <ion-input type="number" inputmode="decimal"
                                [(ngModel)]="shipJumpMax" name="jump"></ion-input>
+                  </ion-item>
+                </ion-col>
+
+                <ion-col size="12" size-md="6">
+                  <ion-item fill="outline">
+                    <ion-label position="stacked">API Key <ion-note>(optional)</ion-note></ion-label>
+                    <ion-input type="password" [(ngModel)]="apiKey" name="apiKey" placeholder="X-API-Key"></ion-input>
                   </ion-item>
                 </ion-col>
 
@@ -55,29 +65,46 @@
                   </ion-segment>
                 </ion-col>
 
-                <ion-col size="12" class="ion-text-right ion-margin-top">
-                  <ion-button type="submit" color="primary" [disabled]="loading()" expand="block">
+                <ion-col size="12" size-md="6">
+                  <ion-item lines="none" class="metric-item">
+                    <ion-label>Optimize</ion-label>
+                  </ion-item>
+                  <ion-segment [(ngModel)]="optimize" name="optimize">
+                    <ion-segment-button value="distance">
+                      <ion-label>Distance</ion-label>
+                    </ion-segment-button>
+                    <ion-segment-button value="hops">
+                      <ion-label>Fewest Jumps</ion-label>
+                    </ion-segment-button>
+                  </ion-segment>
+                </ion-col>
+
+                <ion-col size="12" class="ion-margin-top">
+                  <ion-button type="submit" color="primary" expand="block"
+                              (click)="run()" [disabled]="loading()">
                     <ion-spinner slot="start" *ngIf="loading()"></ion-spinner>
                     Compute
                   </ion-button>
                 </ion-col>
+
               </ion-row>
             </form>
 
-            <ion-item lines="none" *ngIf="loading()" class="status muted">
-              <ion-spinner slot="start"></ion-spinner>
-              <ion-label>Calculating…</ion-label>
+            <ion-item lines="none" class="status muted"
+                      *ngIf="!result()?.hops?.length && !error() && !loading()">
+              <ion-icon name="information-circle-outline" slot="start"></ion-icon>
+              <ion-label>No route yet — run a query.</ion-label>
             </ion-item>
 
-            <ion-item color="danger" lines="none" *ngIf="error()" class="status">
+            <ion-item color="danger" lines="none" class="status" *ngIf="error()">
               <ion-icon name="alert-circle" slot="start"></ion-icon>
               <ion-label>Error: {{ error() }}</ion-label>
             </ion-item>
           </ion-card-content>
         </ion-card>
 
-        <!-- Result Card -->
-        <ng-container *ngIf="!loading() && result() as r">
+        <!-- Result -->
+        <ng-container *ngIf="result() as r">
           <ion-card class="elev" *ngIf="r.ok; else bad">
             <ion-card-header>
               <ion-card-title>Result</ion-card-title>
@@ -86,14 +113,26 @@
             <ion-card-content>
               <div class="stats">
                 <ion-chip outline>
-                  <ion-icon name="trail-sign-outline"></ion-icon>
-                  <ion-label>Hops: {{ r.hops?.length ?? 0 }}</ion-label>
+                  <ion-icon name="bar-chart-outline"></ion-icon>
+                  <ion-label>Metric: {{ r.metric || metric }}</ion-label>
                 </ion-chip>
                 <ion-chip outline>
+                  <ion-icon name="options-outline"></ion-icon>
+                  <ion-label>Optimize: {{ r.optimize || optimize }}</ion-label>
+                </ion-chip>
+                <ion-chip outline color="primary">
+                  <ion-icon name="swap-horizontal-outline"></ion-icon>
+                  <ion-label>Hops: {{ r.hops?.length ?? r.hopCount ?? 0 }}</ion-label>
+                </ion-chip>
+                <ion-chip outline color="tertiary" *ngIf="r.totalDistance != null">
                   <ion-icon name="resize-outline"></ion-icon>
                   <ion-label>Total: {{ r.totalDistance | number:'1.2-4' }}</ion-label>
                 </ion-chip>
-                <ion-chip outline color="tertiary">
+                <ion-chip outline *ngIf="r.maxEdgeLength != null">
+                  <ion-icon name="planet-outline"></ion-icon>
+                  <ion-label>Max Edge: {{ r.maxEdgeLength }}</ion-label>
+                </ion-chip>
+                <ion-chip outline *ngIf="r.expanded != null">
                   <ion-icon name="stats-chart-outline"></ion-icon>
                   <ion-label>Expanded: {{ r.expanded }}</ion-label>
                 </ion-chip>
@@ -111,10 +150,10 @@
                   </thead>
                   <tbody>
                     <tr *ngFor="let h of r.hops; let i = index">
-                      <td data-col="#">{{ i + 1 }}</td>
-                      <td data-col="From">{{ h.from.id }} / {{ h.from.name }}</td>
-                      <td data-col="To">{{ h.to.id }} / {{ h.to.name }}</td>
-                      <td data-col="Distance">{{ h.distance | number:'1.2-4' }}</td>
+                      <td data-col="#"> {{ i + 1 }} </td>
+                      <td data-col="From"> {{ h.from.id }} / {{ h.from.name }} </td>
+                      <td data-col="To"> {{ h.to.id }} / {{ h.to.name }} </td>
+                      <td data-col="Distance"> {{ h.distance | number:'1.2-4' }} </td>
                     </tr>
                   </tbody>
                 </table>

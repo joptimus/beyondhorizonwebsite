@@ -39,6 +39,8 @@ export class StarMapPage implements OnInit, OnDestroy {
   toId = 9008810;
   shipJumpMax: number | null = null;
   metric: '2d' | '3d' = '3d';
+  optimize: 'distance' | 'hops' = 'distance';
+  apiKey: string = ''; // optional
 
   loading = signal(false);
   error = signal<string | null>(null);
@@ -68,7 +70,7 @@ export class StarMapPage implements OnInit, OnDestroy {
 
     const resize = () => {
       this.w = c.clientWidth || 800;
-      this.h = 500; // fixed height; make responsive if you prefer
+      this.h = 500; // adjust if you want responsive height
       this.dpr = Math.max(1, window.devicePixelRatio || 1);
       c.width = Math.max(1, Math.floor(this.w * this.dpr));
       c.height = Math.max(1, Math.floor(this.h * this.dpr));
@@ -93,10 +95,9 @@ export class StarMapPage implements OnInit, OnDestroy {
       this.zoom = Math.max(0.1, Math.min(5, this.zoom * factor));
       const after = this.screenToWorld(cx, cy);
 
-      // keep the world point under cursor stable
+      // keep point under cursor stable
       this.offsetX += (before.x - after.x);
-      // mapping uses -z for Y, so adjust with (after - before)
-      this.offsetY += (after.z - before.z);
+      this.offsetY += (after.z - before.z); // note sign due to -(z) mapping
 
       this.draw();
     };
@@ -137,16 +138,14 @@ export class StarMapPage implements OnInit, OnDestroy {
   }
 
   private worldToScreen(p: P) {
-    // project 3D -> 2D top-down (x vs z). y is ignored in view; used only for distance.
+    // project 3D -> 2D top-down (x vs z). y ignored for view.
     const sx = (p.x - this.offsetX) * this.zoom + this.w / 2;
     const sy = (-(p.z) - this.offsetY) * this.zoom + this.h / 2;
     return { x: sx, y: sy };
   }
 
-  // FIXED: return world {x, z} corresponding to screen point (sx, sy)
   private screenToWorld(sx: number, sy: number): { x: number; z: number } {
     const x = (sx - this.w / 2) / this.zoom + this.offsetX;
-    // worldToScreen used -(z) - offsetY => invert that:
     const z = -((sy - this.h / 2) / this.zoom + this.offsetY);
     return { x, z };
   }
@@ -160,7 +159,8 @@ export class StarMapPage implements OnInit, OnDestroy {
         from: Number(this.fromId),
         to: Number(this.toId),
         metric: this.metric,
-        shipJumpMax: this.shipJumpMax ?? null
+        shipJumpMax: this.shipJumpMax ?? null,
+        optimize: this.optimize,
       });
       if (!out.ok) {
         this.error.set(out.error || 'Route failed');
