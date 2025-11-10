@@ -1,0 +1,27 @@
+<!-- File: src/app/features/ships/ship-detail.page.html -->
+<ion-content *ngIf="ship() as s">
+  <section class="vds-section">
+    <div class="head">
+      <vds-badge [series]="s.series">{{s.code}}</vds-badge>
+      <h1 class="vds-h1">{{s.name}}</h1>
+      <span class="vds-chip vds-code">{{s.class}}</span>
+      <span class="vds-chip vds-code" *ngIf="s.line">{{s.line}}</span>
+      <a routerLink="/ships" class="back">Back to Ships</a>
+    </div>
+
+    <div class="layout">
+      <article class="vds-card prose">
+        <h2 class="vds-h2">Codex</h2>
+        <p>{{s.summary}}</p>
+        <p>{{s.description}}</p>
+      </article>
+      <aside class="right">
+        <vds-spec-grid [specs]="s.specs"></vds-spec-grid>
+        <div class="cta vds-card">
+          <a routerLink="/codex" class="btn">View in Codex</a>
+          <a routerLink="/media" class="btn">Download Poster</a>
+        </div>
+      </aside>
+    </div>
+  </section>
+</ion-content>

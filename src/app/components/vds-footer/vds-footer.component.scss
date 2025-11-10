@@ -1,0 +1,4 @@
+/* File: src/app/components/vds-footer/vds-footer.component.scss */
+ion-toolbar { background: var(--vds-bg-10); border-top:1px solid var(--vds-border); color: var(--vds-muted); }
+.row { display:flex; gap:8px; padding:8px 12px; font-size: var(--vds-small); }
+.right { margin-left:auto; opacity:.7; }

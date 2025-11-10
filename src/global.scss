@@ -113,4 +113,116 @@
     background: rgba(255,159,26,.06);
   }
 }
+/* File: src/theme/variables.css */
+:root {
+  /* Palette */
+  --vds-bg-00:#0b0f13; --vds-bg-10:#11161c; --vds-bg-20:#1a2129;
+  --vds-panel:#141a21; --vds-surface:#18212a; --vds-border:#2b3440;
+  --vds-teal:#00d4d4; --vds-teal-weak:#00d4d422; --vds-silver:#c2c8cf;
+  --vds-gold:#e4b64a; --vds-red:#ff4d4d; --vds-amber:#ffb84d; --vds-focus:#8af3ff;
 
+  /* Typography */
+  --vds-font-ui: 'Inter', system-ui, Segoe UI, Roboto, Arial, sans-serif;
+  --vds-font-code: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --vds-h1: 28px; --vds-h2: 22px; --vds-h3: 18px; --vds-body: 14px; --vds-small: 12px;
+  --vds-tight:-0.02em;
+
+  /* Spacing */
+  --vds-space-0: 0; --vds-space-1: 4px; --vds-space-2: 8px; --vds-space-3: 12px;
+  --vds-space-4: 16px; --vds-space-5: 24px; --vds-space-6: 32px; --vds-space-7: 48px;
+
+  /* Shape + Effects */
+  --vds-radius-1: 6px; --vds-radius-2: 10px; --vds-radius-3: 14px;
+  --vds-shadow-1: 0 2px 8px rgba(0,0,0,.35);
+  --vds-shadow-2: 0 8px 24px rgba(0,0,0,.45);
+
+  /* Density */
+  --vds-density: 1; /* 1 = compact, 1.25 = spacious */
+}
+
+/* Ionic theme hooks */
+/* File: src/theme/variables.css */
+:root {
+  /* Palette — darker base, cleaner contrasts, vivid teal */
+  --vds-bg-00:#070a0d; --vds-bg-10:#0e1318; --vds-bg-20:#141b22;
+  --vds-panel:#0f151b; --vds-surface:#101922; --vds-border:#26303c;
+  --vds-teal:#18e6e6; --vds-teal-weak:#18e6e622; --vds-silver:#cdd6dd;
+  --vds-gold:#efc15a; --vds-red:#ff5e6b; --vds-amber:#ffbf66; --vds-focus:#8af3ff;
+
+  /* Typography — scale up */
+  --vds-font-ui: 'Inter', system-ui, Segoe UI, Roboto, Arial, sans-serif;
+  --vds-font-code: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --vds-h1: clamp(32px, 2.8vw + 12px, 48px);
+  --vds-h2: clamp(22px, 1.6vw + 10px, 30px);
+  --vds-h3: 20px;
+  --vds-body: 16px;
+  --vds-small: 13px;
+  --vds-tight:-0.015em;
+
+  /* Spacing — breathe a bit more by default */
+  --vds-space-0: 0; --vds-space-1: 4px; --vds-space-2: 8px; --vds-space-3: 12px;
+  --vds-space-4: 16px; --vds-space-5: 24px; --vds-space-6: 36px; --vds-space-7: 56px;
+
+  /* Shape + Effects */
+  --vds-radius-1: 10px; --vds-radius-2: 14px; --vds-radius-3: 18px;
+  --vds-shadow-1: 0 6px 18px rgba(0,0,0,.45);
+  --vds-shadow-2: 0 30px 60px rgba(0,0,0,.55);
+
+  /* Density / scale knobs */
+  --vds-density: 1.1;
+  --vds-ui-scale: 1.08;
+}
+
+/* Ionic hooks */
+:root {
+  --ion-font-family: var(--vds-font-ui);
+  --ion-text-color: var(--vds-silver);
+  --ion-background-color: var(--vds-bg-00);
+  --ion-toolbar-background: color-mix(in oklab, var(--vds-bg-10) 92%, black);
+  --ion-item-background: var(--vds-panel);
+  --ion-color-primary: var(--vds-teal);
+  --ion-color-medium: var(--vds-silver);
+  --ion-color-danger: var(--vds-red);
+}
+
+/* Global utilities */
+.vds-section { 
+  padding: calc(var(--vds-space-6)*var(--vds-density)) var(--vds-space-6);
+}
+.vds-h1 { font-size: var(--vds-h1); letter-spacing: var(--vds-tight); font-weight: 700; }
+.vds-h2 { font-size: var(--vds-h2); letter-spacing: var(--vds-tight); font-weight: 650; }
+.vds-code { font-family: var(--vds-font-code); }
+.vds-muted { color:#9aa7b3; }
+
+/* Futuristic card panel with gradient fill + hairline neon rim */
+.vds-card {
+  background: 
+    linear-gradient(180deg, rgba(24,230,230,.05), rgba(24,230,230,0) 28%),
+    linear-gradient(180deg, var(--vds-surface), var(--vds-panel));
+  border: 1px solid color-mix(in oklab, var(--vds-border) 80%, black);
+  border-radius: var(--vds-radius-2);
+  box-shadow: var(--vds-shadow-1);
+  position: relative;
+}
+.vds-card::after{ /* hairline rim */
+  content:'';
+  position:absolute; inset:0;
+  border-radius: inherit;
+  pointer-events:none;
+  mask: linear-gradient(#000,#000) content-box, linear-gradient(#000,#000);
+  -webkit-mask: linear-gradient(#000,#000) content-box, linear-gradient(#000,#000);
+  padding:1px;
+  background: radial-gradient(60% 140% at 0% 0%, #18e6e622 0%, transparent 70%) border-box;
+  border: 1px solid #18e6e61f;
+}
+
+/* Scanline / fabric background helper */
+.vds-fabric {
+  background:
+    radial-gradient(1200px 320px at 30% -10%, #18e6e614, transparent 70%),
+    repeating-linear-gradient(0deg, transparent 0 2px, rgba(255,255,255,.03) 2px 3px);
+}
+
+/* Better grid */
+.vds-grid { display:grid; gap: var(--vds-space-5); grid-template-columns: repeat(12, 1fr); }
+.container { max-width: 1200px; margin: 0 auto; }

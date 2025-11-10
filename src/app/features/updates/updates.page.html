@@ -1,0 +1,13 @@
+<!-- File: src/app/features/updates/updates.page.html -->
+<ion-content>
+  <section class="vds-section vds-card">
+    <h1 class="vds-h1">Changelog</h1>
+    <ul class="feed">
+      <li *ngFor="let e of entries">
+        <div class="date">{{e.date}}</div>
+        <div class="title">{{e.title}}</div>
+        <p class="body">{{e.body}}</p>
+      </li>
+    </ul>
+  </section>
+</ion-content>

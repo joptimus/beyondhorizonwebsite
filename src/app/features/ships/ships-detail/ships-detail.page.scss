@@ -1,0 +1,8 @@
+/* File: src/app/features/ships/ship-detail.page.scss */
+.head { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+.back { margin-left:auto; text-decoration:none; border-bottom:1px dashed var(--vds-border); }
+.layout { display:grid; grid-template-columns: 1fr 320px; gap:16px; margin-top:16px; }
+.prose { padding:16px; }
+.right .cta { padding:12px; display:flex; gap:8px; margin-top:12px; }
+.btn { border:1px solid var(--vds-border); border-radius:8px; padding:8px 10px; text-decoration:none; }
+@media (max-width: 960px){ .layout{ grid-template-columns: 1fr; } .right{ order:-1 } }

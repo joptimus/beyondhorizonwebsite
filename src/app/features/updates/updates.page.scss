@@ -1,0 +1,7 @@
+/* File: src/app/features/updates/updates.page.scss */
+.feed{list-style:none;margin:0;padding:0}
+.feed li{border-top:1px solid var(--vds-border); padding:12px 0}
+.feed li:first-child{border-top:none}
+.date{font-family:var(--vds-font-code); font-size:12px; opacity:.7}
+.title{font-weight:600}
+.body{opacity:.9}

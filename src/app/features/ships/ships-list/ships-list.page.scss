@@ -1,0 +1,8 @@
+/* File: src/app/features/ships/ships-list/ships-list.page.css */
+.filters { 
+  display:flex; gap:16px; padding:14px; margin-bottom:20px; 
+  background:var(--vds-panel); border:1px solid var(--vds-border); border-radius: var(--vds-radius-2);
+}
+.grid { 
+  display:grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap:18px; 
+}

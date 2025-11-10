@@ -1,0 +1,9 @@
+<!-- File: src/app/features/media/media.page.html -->
+<ion-content>
+  <section class="vds-section">
+    <h1 class="vds-h1">Media & Wallpapers</h1>
+    <div class="grid">
+      <vds-poster *ngFor="let p of posters" [src]="p.src" [caption]="p.caption"></vds-poster>
+    </div>
+  </section>
+</ion-content>

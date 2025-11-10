@@ -1,0 +1,11 @@
+<!-- File: src/app/components/vds-card/vds-card.component.html -->
+<a class="card vds-card" [routerLink]="to" [attr.aria-label]="title">
+  <div class="head">
+    <vds-badge [series]="series">{{code}}</vds-badge>
+    <h3>{{title}}</h3>
+  </div>
+  <p class="summary">{{summary}}</p>
+  <div class="tags">
+    <span class="vds-chip" *ngFor="let t of tags">{{t}}</span>
+  </div>
+</a>

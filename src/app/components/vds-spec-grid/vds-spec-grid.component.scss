@@ -1,0 +1,5 @@
+/* File: src/app/components/vds-spec-grid/vds-spec-grid.component.scss */
+.grid { display:grid; grid-template-columns: repeat(auto-fill,minmax(160px,1fr)); gap:8px; padding:12px; }
+.cell { background: var(--vds-panel); border:1px solid var(--vds-border); border-radius: 8px; padding:8px; }
+.k { font-size: 11px; text-transform: uppercase; opacity:.7; }
+.v { font-family: var(--vds-font-code); }

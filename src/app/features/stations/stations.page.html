@@ -1,0 +1,13 @@
+<!-- File: src/app/features/stations/stations.page.html -->
+<ion-content>
+  <section class="vds-section">
+    <h1 class="vds-h1">Bases & Stations (BX)</h1>
+    <p class="vds-muted">Includes strategic jump interface: <strong>BXG-9 Relay Nexus</strong>.</p>
+    <div class="grid">
+      <vds-card *ngFor="let f of list"
+        [title]="f.name" [code]="f.code" [series]="f.series"
+        [summary]="f.summary" [tags]="f.tags" [to]="'/codex?focus='+f.id">
+      </vds-card>
+    </div>
+  </section>
+</ion-content>

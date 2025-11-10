@@ -1,0 +1,13 @@
+<!-- File: src/app/components/vds-hero/vds-hero.component.html -->
+<section class="hero vds-section">
+  <div class="inner vds-card vds-fabric" [style.--bg-url]="bgImage ? 'url('+bgImage+')' : 'none'">
+    <div class="media" *ngIf="logoImage">
+      <img class="logo" [src]="logoImage" alt="Beyond Horizon logo" loading="eager">
+    </div>
+    <h1 class="vds-h1">{{title}}</h1>
+    <p class="muted">{{subtitle}}</p>
+    <div class="ctas">
+      <a class="btn" *ngFor="let c of ctas" [routerLink]="c.link">{{c.label}}</a>
+    </div>
+  </div>
+</section>

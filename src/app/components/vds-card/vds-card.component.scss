@@ -1,0 +1,18 @@
+/* File: src/app/components/vds-card/vds-card.component.css */
+.card { 
+  display:block; padding:18px; text-decoration:none; color:inherit; 
+  transition:.22s transform, .22s border-color, .22s box-shadow; 
+  border:1px solid var(--vds-border); border-radius: var(--vds-radius-2); 
+  background: linear-gradient(180deg, #0e141a, #0a0f13);
+  box-shadow: var(--vds-shadow-1);
+}
+.card:hover { 
+  transform: translateY(-3px); 
+  border-color: color-mix(in oklab, var(--vds-teal) 35%, var(--vds-border));
+  box-shadow: 0 10px 30px rgba(0,0,0,.55), 0 0 0 1px #18e6e61c inset;
+}
+.head { display:flex; align-items:center; gap:12px; }
+h3 { margin:0; font-size: var(--vds-h3); letter-spacing: .01em; }
+.summary { color:#a7b1bc; margin:10px 0 14px; min-height: 42px; }
+.tags { display:flex; gap:8px; flex-wrap:wrap; }
+.vds-chip { border:1px solid var(--vds-border); padding:4px 10px; border-radius:999px; font-size: var(--vds-small); }

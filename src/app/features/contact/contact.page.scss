@@ -1,0 +1,4 @@
+/* File: src/app/features/contact/contact.page.scss */
+.form{display:grid; gap:12px; margin-top:12px}
+.btn{border:1px solid var(--vds-border); border-radius:8px; padding:10px 12px; background:transparent}
+.btn:hover{border-color:var(--vds-teal); color:var(--vds-teal)}

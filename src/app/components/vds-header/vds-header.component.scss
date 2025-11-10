@@ -1,0 +1,26 @@
+/* File: src/app/components/vds-header/vds-header.component.css */
+ion-toolbar {
+  background: linear-gradient(180deg, var(--vds-bg-10), var(--vds-bg-20));
+  border-bottom: 1px solid var(--vds-border);
+}
+.brand { font-family: var(--vds-font-ui); letter-spacing: .08em; font-weight: 800; font-size: 18px; }
+.mono { font-family: var(--vds-font-code); color: var(--vds-teal); margin-right: 8px; font-weight:700; }
+
+/* Nav buttons styled the Ionic way */
+.nav ion-button {
+  --padding-start: 10px; --padding-end: 10px;
+  --border-width: 1px; --border-color: transparent; --border-radius: 10px;
+}
+.nav ion-button:hover {
+  --border-color: var(--vds-border);
+  background: color-mix(in oklab, var(--vds-bg-20) 70%, black);
+  box-shadow: 0 0 0 1px #18e6e622 inset;
+}
+
+/* Responsive: show hamburger under 992px */
+.mobile-only { display: none; }
+.desktop-only { display: flex; }
+@media (max-width: 992px){
+  .mobile-only { display: inline-flex; }
+  .desktop-only { display: none; }
+}

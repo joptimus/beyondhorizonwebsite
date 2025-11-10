@@ -1,0 +1,12 @@
+<!-- File: src/app/features/contact/contact.page.html -->
+<ion-content>
+  <section class="vds-section vds-card">
+    <h1 class="vds-h1">Contact / Press Kit</h1>
+    <form (submit)="submit($event)" class="form">
+      <ion-input label="Name" labelPlacement="stacked" required></ion-input>
+      <ion-input label="Email" labelPlacement="stacked" type="email" required></ion-input>
+      <ion-textarea label="Message" labelPlacement="stacked" autoGrow required></ion-textarea>
+      <button class="btn" type="submit">Send</button>
+    </form>
+  </section>
+</ion-content>

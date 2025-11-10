@@ -1,0 +1,29 @@
+<!-- File: src/app/features/ships/ships-list.page.html -->
+<ion-content>
+  <section class="vds-section">
+    <div class="filters vds-card">
+      <ion-select label="Class" interface="popover" (ionChange)="classFilter.set($event.detail.value||'')">
+        <ion-select-option value="">All</ion-select-option>
+        <ion-select-option *ngFor="let c of classes" [value]="c">{{c}}</ion-select-option>
+      </ion-select>
+      <ion-select label="Line" interface="popover" (ionChange)="lineFilter.set($event.detail.value||'')">
+        <ion-select-option value="">All</ion-select-option>
+        <ion-select-option *ngFor="let l of lines" [value]="l">{{l}}</ion-select-option>
+      </ion-select>
+    </div>
+
+    <div class="grid">
+<!-- File: src/app/features/ships/ships-list/ships-list.page.html -->
+<vds-card
+  *ngFor="let s of list()"
+  [title]="s.name"
+  [code]="s.code"
+  [series]="s.series"
+  [summary]="s.summary"
+  [tags]="tagsOf(s)"
+  [to]="'/ships/'+s.id">
+</vds-card>
+
+    </div>
+  </section>
+</ion-content>

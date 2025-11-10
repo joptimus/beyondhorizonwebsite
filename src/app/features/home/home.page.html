@@ -1,0 +1,22 @@
+<!-- File: src/app/features/home/home.page.html -->
+<ion-content fullscreen>
+  <div class="page">
+    <div class="container">
+      <vds-hero
+        title="Voran Defense Systems"
+        subtitle="Industrial–Military Catalog Interface"
+        [ctas]="[
+          {label:'Explore the Catalog', link:'/codex'},
+          {label:'Ships', link:'/ships'},
+          {label:'Stations', link:'/stations'}
+        ]">
+      </vds-hero>
+
+      <section class="vds-section">
+        <div class="vds-card vds-fabric" style="padding:16px; border-radius: var(--vds-radius-2);">
+          <div class="vds-muted">Systems obey geometry. Voran owns the geometry.</div>
+        </div>
+      </section>
+    </div>
+  </div>
+</ion-content>

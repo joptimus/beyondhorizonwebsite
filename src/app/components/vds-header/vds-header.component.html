@@ -1,0 +1,26 @@
+<!-- File: src/app/components/vds-header/vds-header.component.html -->
+<ion-header>
+  <ion-toolbar>
+    <!-- Mobile: hamburger -->
+    <ion-buttons slot="start" class="mobile-only">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+
+    <ion-title class="brand">
+      <span class="mono">BEYOND</span> HORIZON
+    </ion-title>
+
+    <!-- Desktop: full nav -->
+    <ion-buttons slot="end" class="desktop-only nav">
+      <ion-button routerLink="/">Home</ion-button>
+      <ion-button routerLink="/ships">Ships</ion-button>
+      <ion-button routerLink="/stations">Stations</ion-button>
+      <ion-button routerLink="/logistics">Logistics</ion-button>
+      <ion-button routerLink="/engineering">Engineering</ion-button>
+      <ion-button routerLink="/codex">Codex</ion-button>
+      <ion-button routerLink="/media">Media</ion-button>
+      <ion-button routerLink="/updates">Updates</ion-button>
+      <ion-button routerLink="/contact">Contact</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>

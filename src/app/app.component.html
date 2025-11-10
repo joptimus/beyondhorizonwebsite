@@ -1,16 +1,24 @@
+<!-- File: src/app/app.component.html -->
 <ion-app>
-  <ion-router-outlet>  <nav class="top-nav">
-  <a routerLink="/">Home</a>
-  <a routerLink="/route-tester">Route Tester</a>
-  <a routerLink="/star-map">Star Map</a>
-</nav></ion-router-outlet>
+  <!-- Mobile menu -->
+  <ion-menu contentId="main-content" type="overlay">
+    <ion-content>
+      <ion-list lines="none" inset="true">
+        <ion-item routerLink="/">Home</ion-item>
+        <ion-item routerLink="/ships">Ships</ion-item>
+        <ion-item routerLink="/stations">Stations</ion-item>
+        <ion-item routerLink="/logistics">Logistics</ion-item>
+        <ion-item routerLink="/engineering">Engineering</ion-item>
+        <ion-item routerLink="/codex">Codex</ion-item>
+        <ion-item routerLink="/media">Media</ion-item>
+        <ion-item routerLink="/updates">Updates</ion-item>
+        <ion-item routerLink="/contact">Contact</ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
 
-
-
-<style>
-.top-nav { display:flex; gap:1rem; padding:.75rem 1rem; border-bottom:1px solid #eee; }
-.top-nav a { text-decoration:none; color:#1976d2; }
-.top-nav a:hover { text-decoration:underline; }
-</style>
-
+  <!-- Header + routed content -->
+  <vds-header></vds-header>
+  <ion-router-outlet id="main-content"></ion-router-outlet>
+  <vds-footer></vds-footer>
 </ion-app>

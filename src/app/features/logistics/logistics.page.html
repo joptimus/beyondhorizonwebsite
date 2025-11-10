@@ -1,0 +1,12 @@
+<!-- File: src/app/features/logistics/logistics.page.html -->
+<ion-content>
+  <section class="vds-section">
+    <h1 class="vds-h1">Cargo & Expedition (CX)</h1>
+    <div class="grid">
+      <vds-card *ngFor="let a of list"
+        [title]="a.name" [code]="a.code" [series]="a.series"
+        [summary]="a.summary" [tags]="a.tags" [to]="'/codex?focus='+a.id">
+      </vds-card>
+    </div>
+  </section>
+</ion-content>
