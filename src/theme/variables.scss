@@ -1,2 +1,46 @@
 // For information on how to create your own theme, please see:
 // http://ionicframework.com/docs/theming/
+:root {
+  /* Base Surfaces */
+  --app-bg: #0b0b0c;
+  --app-surface: #131316;
+  --app-surface-2: #1a1b1f;
+  --app-border: #23242a;
+
+  /* Text */
+  --app-text: #eceef1;
+  --app-text-dim: #b9bec6;
+  --app-text-muted: #9096a1;
+
+  /* Accent (warm, premium) */
+  --app-accent: #ffd166;
+  --app-accent-contrast: #0b0b0c;
+
+  /* Feedback */
+  --app-success: #2bd08f;
+  --app-warning: #ffb454;
+  --app-danger:  #ff6b6b;
+
+  /* Radii & Elevation */
+  --app-radius-sm: 8px;
+  --app-radius-md: 14px;
+  --app-radius-lg: 22px;
+  --app-shadow-1: 0 8px 28px rgba(0,0,0,0.28);
+  --app-shadow-2: 0 12px 40px rgba(0,0,0,0.36);
+
+  /* Spacing (baseline = 8px) */
+  --space-1: 8px;   --space-2: 12px;  --space-3: 16px;
+  --space-4: 20px;  --space-5: 24px;  --space-6: 32px;
+  --space-7: 40px;  --space-8: 56px;  --space-9: 72px;
+
+  /* Motion */
+  --app-ease: cubic-bezier(.2,.8,.2,1);
+  --app-speed-fast: 150ms;
+  --app-speed: 220ms;
+  --app-speed-slow: 320ms;
+
+  /* Focus ring */
+  --app-focus: 0 0 0 2px color-mix(in oklab, var(--app-accent) 80%, white);
+}
+
+html { color-scheme: dark; }

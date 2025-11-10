@@ -1,0 +1,80 @@
+/* Typography scale */
+:root {
+  --font-display: clamp(28px, 5vw, 56px);
+  --font-h1: clamp(24px, 4vw, 40px);
+  --font-h2: clamp(20px, 3vw, 28px);
+  --font-body: 16px;
+  --font-small: 13px;
+}
+
+body, ion-app, ion-content {
+  background: var(--app-bg);
+  color: var(--app-text);
+}
+
+/* Helpers */
+.app-hero {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0) 60%),
+    var(--app-bg);
+  padding: clamp(32px, 6vw, 96px) 0;
+}
+
+.app-card {
+  background: var(--app-surface);
+  border-radius: var(--app-radius-lg);
+  box-shadow: var(--app-shadow-1);
+  transition: transform var(--app-speed) var(--app-ease), box-shadow var(--app-speed) var(--app-ease);
+  &:hover { transform: translateY(-2px); }
+  @media (prefers-reduced-motion: reduce) { transition: none; transform: none; }
+}
+
+/* Buttons */
+ion-button {
+  --border-radius: var(--app-radius-sm);
+  --padding-start: 14px; --padding-end: 14px;
+  --transition: background var(--app-speed) var(--app-ease), transform var(--app-speed) var(--app-ease);
+}
+ion-button.button-solid {
+  --background: var(--app-accent);
+  --color: var(--app-accent-contrast);
+}
+ion-button.button-outline {
+  --border-color: var(--app-accent);
+  --color: var(--app-text);
+}
+
+/* Cards and lists */
+ion-card {
+  border-radius: var(--app-radius-lg);
+  background: var(--app-surface);
+  color: var(--app-text);
+  box-shadow: var(--app-shadow-1);
+}
+
+/* Inputs */
+ion-item {
+  --background: var(--app-surface);
+  --color: var(--app-text);
+  --border-color: var(--app-border);
+  border-radius: var(--app-radius-sm);
+}
+
+/* Focus ring */
+:focus-visible {
+  outline: none;
+  box-shadow: var(--app-focus);
+}
+
+/* Tables (simple) */
+.table-dark {
+  background: var(--app-surface);
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius-md);
+  overflow: clip;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}

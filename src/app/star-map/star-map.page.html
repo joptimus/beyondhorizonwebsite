@@ -6,9 +6,9 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="star-map">
-  <ion-grid fixed>
-    <ion-row class="ion-justify-content-center ion-margin-top">
-      <ion-col size="12" size-lg="10" size-xl="8">
+  <ion-grid>
+    <ion-row class="ion-margin-top">
+      <ion-col size="12" size-lg="3" size-xl="3">
 
         <!-- Form Card -->
         <ion-card class="elev">
@@ -44,7 +44,7 @@
                       </div>
                       <ion-chip outline color="tertiary" class="jump-pill">
                         <ion-icon name="resize-outline"></ion-icon>
-                        <ion-label>{{ shipJumpMax || 0 | number:'1.1-2' }} ly</ion-label>
+                        <ion-label>{{ shipJumpMax || 0 | number:'1.1-2' }} parsects</ion-label>
                       </ion-chip>
                     </div>
 
@@ -117,6 +117,11 @@
           </ion-card-content>
         </ion-card>
 
+
+
+      </ion-col>
+
+      <ion-col size="12" size-lg="9" size-xl="9">
         <!-- Canvas Card (always rendered so ViewChild is valid in ngOnInit) -->
         <ion-card class="elev canvas-card">
           <ion-card-header>
@@ -144,7 +149,7 @@
               </ion-chip>
               <ion-chip outline *ngIf="r.maxEdgeLength != null">
                 <ion-icon name="planet-outline"></ion-icon>
-                <ion-label>Max Edge: {{ r.maxEdgeLength }}</ion-label>
+                <ion-label>Max Ship Jump: {{ r.maxEdgeLength }}</ion-label>
               </ion-chip>
             </div>
 
@@ -216,7 +221,9 @@
           </ion-card-content>
         </ion-card>
 
+
       </ion-col>
+
     </ion-row>
   </ion-grid>
 </ion-content>
