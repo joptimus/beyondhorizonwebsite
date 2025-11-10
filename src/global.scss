@@ -226,3 +226,19 @@
 /* Better grid */
 .vds-grid { display:grid; gap: var(--vds-space-5); grid-template-columns: repeat(12, 1fr); }
 .container { max-width: 1200px; margin: 0 auto; }
+/* Global offset so pages don't slide under the global header */
+:root { --vds-toolbar-h: 56px; }         /* 56 = MD toolbar height; iOS is 44 but this is fine */
+ion-toolbar { --min-height: var(--vds-toolbar-h); }
+
+#main-content { display:block; }         /* this is your ion-router-outlet id */
+
+#main-content > .ion-page > ion-content {
+  /* Push content below the header, including safe-area notch */
+  --padding-top: calc(env(safe-area-inset-top) + var(--vds-toolbar-h));
+}
+
+/* If you use fullscreen ion-content anywhere, force the offset too */
+#main-content > .ion-page > ion-content[fullscreen] {
+  --padding-top: calc(env(safe-area-inset-top) + var(--vds-toolbar-h));
+}
+
