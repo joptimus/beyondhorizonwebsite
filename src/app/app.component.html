@@ -12,6 +12,7 @@
         <ion-item routerLink="/codex">Codex</ion-item>
         <ion-item routerLink="/media">Media</ion-item>
         <ion-item routerLink="/updates">Updates</ion-item>
+        <ion-item routerLink="/star-map">Star Map</ion-item>
         <ion-item routerLink="/contact">Contact</ion-item>
       </ion-list>
     </ion-content>
@@ -19,6 +20,8 @@
 
   <!-- Header + routed content -->
   <vds-header></vds-header>
-  <ion-router-outlet id="main-content"></ion-router-outlet>
+  <ion-router-outlet id="main-content">
+    <ion-content></ion-content>
+  </ion-router-outlet>
   <vds-footer></vds-footer>
 </ion-app>
