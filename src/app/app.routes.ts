@@ -30,8 +30,14 @@ export const routes: Routes = [
   { path: 'stations', loadComponent: () => import('./features/stations/stations.page').then(m => m.StationsPage) },
   { path: 'medical', loadComponent: () => import('./features/medical/medical.page').then(m => m.MedicalPage) },
   { path: 'habitation', loadComponent: () => import('./features/habitation/habitation.page').then(m => m.HabitationPage) },
-  { path: 'codex', loadComponent: () => import('./features/codex/codex.page').then(m => m.CodexPage) },
+  { path: 'codex', loadComponent: () => import('./features/codex/codex-main/codex.page').then(m => m.CodexPage) },
   { path: 'media', loadComponent: () => import('./features/media/media.page').then(m => m.MediaPage) },
   { path: 'updates', loadComponent: () => import('./features/updates/updates.page').then(m => m.UpdatesPage) },
   { path: 'contact', loadComponent: () => import('./features/contact/contact.page').then(m => m.ContactPage) },
+  
+  {
+    path: 'codex/:id',
+    loadComponent: () =>
+      import('./features/codex/codex-detail/codex-detail.page').then(m => m.CodexDetailPage)
+  }
 ];

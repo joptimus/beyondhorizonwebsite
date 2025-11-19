@@ -1,0 +1,42 @@
+<!-- File: src/app/features/codex/codex-detail.page.html -->
+<ion-content *ngIf="entity() as e">
+  <section class="vds-section">
+    <!-- Only show model viewer for ships (for now) -->
+    <bh-model-viewer *ngIf="isShip()"></bh-model-viewer>
+
+    <div class="head">
+      <vds-badge [series]="e.series">{{ e.code }}</vds-badge>
+      <h1 class="vds-h1">{{ e.name }}</h1>
+
+<span class="vds-chip vds-code" *ngIf="e.class">
+  {{ e.class }}
+</span>
+<span class="vds-chip vds-code" *ngIf="!e.class">
+  {{ e.unitType }}
+</span>
+
+
+      <a routerLink="/codex" class="back">Back to Codex</a>
+    </div>
+
+    <div class="layout">
+      <article class="vds-card prose">
+        <h2 class="vds-h2">{{ e.role }}</h2>
+        <p>{{ e.summary }}</p>
+        <p>{{ e.description }}</p>
+
+        <div class="tags" *ngIf="e.tags?.length">
+          <span class="tag" *ngFor="let t of e.tags">{{ t }}</span>
+        </div>
+      </article>
+
+      <aside class="right">
+        <vds-spec-grid [specs]="specs()"></vds-spec-grid>
+
+        <div class="cta vds-card">
+          <a routerLink="/media" class="btn">Download Media</a>
+        </div>
+      </aside>
+    </div>
+  </section>
+</ion-content>

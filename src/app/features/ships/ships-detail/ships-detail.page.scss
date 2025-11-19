@@ -5,4 +5,7 @@
 .prose { padding:16px; }
 .right .cta { padding:12px; display:flex; gap:8px; margin-top:12px; }
 .btn { border:1px solid var(--vds-border); border-radius:8px; padding:8px 10px; text-decoration:none; }
+.vds-h2{
+    color: #18E6E6;
+}
 @media (max-width: 960px){ .layout{ grid-template-columns: 1fr; } .right{ order:-1 } }

@@ -1,12 +1,21 @@
 <!-- File: src/app/features/habitation/habitation.page.html -->
 <ion-content>
   <section class="vds-section">
-    <h1 class="vds-h1">Habitation (HX)</h1>
+    <h1 class="vds-h1">Habitation & Civil Tiers</h1>
+    <p class="vds-muted">
+      Residential spires, population hubs, and corporate-governed city centers.
+    </p>
+
     <div class="grid">
-      <vds-card *ngFor="let f of list"
-        [title]="f.name" [code]="f.code" [series]="f.series"
-        [summary]="f.summary" [tags]="f.tags" [to]="'/codex?focus='+f.id">
-      </vds-card>
+<vds-card *ngFor="let f of list"
+  [title]="f.name"
+  [code]="f.code"
+  [series]="f.series"
+  [summary]="f.summary"
+  [tags]="f.tags"
+  [to]="'/codex/' + f.id">
+</vds-card>
+
     </div>
   </section>
 </ion-content>

@@ -1,0 +1,13 @@
+<ion-card class="viewer-card">
+  <ion-card-content>
+    <div class="viewer-container">
+      <canvas #canvas></canvas>
+
+      <!-- Loading overlay -->
+      <div class="loading-overlay" *ngIf="isLoading">
+        <ion-spinner name="crescent"></ion-spinner>
+        <p>Initializing ship model…</p>
+      </div>
+    </div>
+  </ion-card-content>
+</ion-card>

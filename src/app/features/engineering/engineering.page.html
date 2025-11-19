@@ -1,11 +1,14 @@
 <!-- File: src/app/features/engineering/engineering.page.html -->
 <ion-content>
   <section class="vds-section">
-    <h1 class="vds-h1">Engineering & Excavation (EX)</h1>
+    <h1 class="vds-h1">Engineering & Extraction</h1>
+    <p class="vds-muted">
+      Orbital forges, power arrays, and deep resource extraction complexes.
+    </p>
+
     <div class="grid">
-      <vds-card *ngFor="let f of list"
-        [title]="f.name" [code]="f.code" [series]="f.series"
-        [summary]="f.summary" [tags]="f.tags" [to]="'/codex?focus='+f.id">
+      <vds-card *ngFor="let f of list" [title]="f.name" [code]="f.code" [series]="f.series" [summary]="f.summary"
+        [tags]="f.tags" [to]="'/codex/' + f.id">
       </vds-card>
     </div>
   </section>

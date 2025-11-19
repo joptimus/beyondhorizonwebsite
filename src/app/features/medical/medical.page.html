@@ -4,8 +4,12 @@
     <h1 class="vds-h1">Medical (MX)</h1>
     <div class="grid">
       <vds-card *ngFor="let f of list"
-        [title]="f.name" [code]="f.code" [series]="f.series"
-        [summary]="f.summary" [tags]="f.tags" [to]="'/codex?focus='+f.id">
+        [title]="f.name"
+        [code]="f.code"
+        [series]="f.series"
+        [summary]="f.summary"
+        [tags]="f.tags"
+        [to]="'/codex/' + f.id">
       </vds-card>
     </div>
   </section>
