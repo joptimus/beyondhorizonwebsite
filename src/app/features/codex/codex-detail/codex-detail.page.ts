@@ -4,21 +4,27 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { IonContent, IonButtons, IonButton } from '@ionic/angular/standalone';
 
-import { SHIPS } from '../../../data/seed-ships';
+import { ShipDisplayData, SHIPS } from '../../../data/seed-ships';
 import { FACILITIES } from '../../../data/seed-facilities';
 import { CX_ASSETS } from '../../../data/seed-cx';
 
-import {
-  CatalogEntityBase,
-  Ship,
-  Facility
-} from '../../../models/catalog.models';
+import { CatalogEntityBase } from '../../../models/catalog.models';
+
+
 
 import { VdsBadgeComponent } from '../../../components/vds-badge/vds-badge.component';
 import { VdsSpecGridComponent } from '../../../components/vds-spec-grid/vds-spec-grid.component';
 import { ModelViewerComponent } from 'src/app/component/model-viewer/model-viewer.component';
 
-type CodexEntity = CatalogEntityBase | Ship | Facility;
+// Ships use UI-only ShipDisplayData; facilities/CX use full DB-backed CatalogEntityBase
+export type CodexEntity = ShipDisplayData | CatalogEntityBase;
+
+
+
+function isShipDisplay(e: CodexEntity | undefined): e is ShipDisplayData {
+  return !!e && (e as ShipDisplayData).templateId !== undefined && (e as any).unitType === undefined;
+}
+
 
 @Component({
   standalone: true,
@@ -37,63 +43,73 @@ type CodexEntity = CatalogEntityBase | Ship | Facility;
   styleUrls: ['./codex-detail.page.scss']
 })
 export class CodexDetailPage {
-  private id = signal<string>('');
+private id = signal<string>('');
 
-  entity = computed<CodexEntity | undefined>(() => {
-    const targetId = this.id();
-    if (!targetId) return undefined;
+entity = computed<CodexEntity | undefined>(() => {
+  const targetId = this.id();
+  if (!targetId) return undefined;
 
-    return (
-      SHIPS.find(s => s.id === targetId) ||
-      FACILITIES.find(f => f.id === targetId) ||
-      CX_ASSETS.find(c => c.id === targetId)
-    );
-  });
+  return (
+    SHIPS.find(s => s.id === targetId) ||
+    FACILITIES.find(f => f.id === targetId) ||
+    CX_ASSETS.find(c => c.id === targetId)
+  ) as CodexEntity | undefined;
+});
 
-  isShip = computed<boolean>(() => {
+  isShip = computed<boolean>(() => isShipDisplay(this.entity()));
+ // this will be used instead of e.unitType in the template
+  unitTypeLabel = computed<string | null>(() => {
     const e = this.entity();
-    return !!e && (e as any).isShip === true;
+    if (!e) return null;
+
+    if (isShipDisplay(e)) {
+      // For UI ships, show something meaningful when there’s no class
+      return e.role || 'Ship';
+    }
+
+    // Facilities / CX assets have unitType from CatalogEntityBase
+    return e.unitType;
   });
 
   specs = computed<Record<string, string | number>>(() => {
     const e = this.entity();
     if (!e) return {};
 
-    const isShip = (e as any).isShip === true;
+    const specs: Record<string, string | number> = {};
 
-    const specs: Record<string, string | number> = {
-      'Unit Type': e.unitType,
-      'Size': e.size,
-      'Hull': e.baseHealth,
-      'Shield': e.baseShield,
-      'Weapon Slots': e.weaponSlots,
-      'Crew Required': e.staffRequired,
-      'Housing': e.totalHousing,
-      'Speed': e.speed,
-      'Hyperspace': e.hyperspace,
-      'Atmospheric': e.atmospheric ? 'Yes' : 'No',
-      'Shield Type': e.shieldType,
-      'Tech Tier': e.techTier,
-      'Resource Capacity': e.resourceCapacity,
-      'Dock Capacity': e.dockCapacity,
-      'Energy Produced': e.baseEnergyProduced,
-      'Energy Used': e.baseEnergyUsed,
-      'Requires Power': e.requiresPower ? 'Yes' : 'No',
-      'Provides Power': e.providesPower,
-      'Provides Storage': e.providesStorage,
-      'Construction Cost': e.constructionCost,
-      'Development Cost': e.developmentCost
-    };
-
-    if (isShip) {
-      const ship = e as Ship;
-      specs['Class'] = ship.class;
-      if (ship.line) {
-        specs['Line'] = ship.line;
-      }
+    if (isShipDisplay(e)) {
+      // Display-only ship: use the UI data you actually have
+      specs['Series'] = e.series;
+      specs['Code'] = e.code;
+      specs['Role'] = e.role;
+      if (e.class) specs['Class'] = e.class;
+      specs['Template ID'] = e.templateId;
+    } else {
+      // Facilities / CX assets: full DB-backed stats from CatalogEntityBase
+      specs['Unit Type'] = e.unitType;
+      specs['Size'] = e.size;
+      specs['Hull'] = e.baseHealth;
+      specs['Shield'] = e.baseShield;
+      specs['Weapon Slots'] = e.weaponSlots;
+      specs['Crew Required'] = e.staffRequired;
+      specs['Housing'] = e.totalHousing;
+      specs['Speed'] = e.speed;
+      specs['Hyperspace'] = e.hyperspace;
+      specs['Atmospheric'] = e.atmospheric ? 'Yes' : 'No';
+      specs['Shield Type'] = e.shieldType;
+      specs['Tech Tier'] = e.techTier;
+      specs['Resource Capacity'] = e.resourceCapacity;
+      specs['Dock Capacity'] = e.dockCapacity;
+      specs['Energy Produced'] = e.baseEnergyProduced;
+      specs['Energy Used'] = e.baseEnergyUsed;
+      specs['Requires Power'] = e.requiresPower ? 'Yes' : 'No';
+      specs['Provides Power'] = e.providesPower;
+      specs['Provides Storage'] = e.providesStorage;
+      specs['Construction Cost'] = e.constructionCost;
+      specs['Development Cost'] = e.developmentCost;
     }
 
-    // Strip zero values so the grid doesn’t get noisy
+    // Strip zero numeric values
     Object.keys(specs).forEach(key => {
       const v = specs[key];
       if (typeof v === 'number' && v === 0) {
@@ -103,6 +119,9 @@ export class CodexDetailPage {
 
     return specs;
   });
+
+
+
 
   constructor(route: ActivatedRoute) {
     const id = route.snapshot.paramMap.get('id') || '';

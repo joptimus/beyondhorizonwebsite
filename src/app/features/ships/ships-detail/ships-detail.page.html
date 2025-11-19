@@ -13,15 +13,30 @@
     <div class="layout">
 
       <article class="vds-card prose">
-                  <bh-model-viewer *ngIf="showViewer"></bh-model-viewer>
+        <bh-model-viewer *ngIf="showViewer"></bh-model-viewer>
         <h2 class="vds-h2">[ DEBRIEF FOR {{s.name}} ]</h2>
         <p>{{ s.summary }}</p>
         <p>{{ s.description }}</p>
       </article>
 
       <aside class="right">
-        <!-- now driven from DB stats via TS computed -->
-        <vds-spec-grid [specs]="specs()"></vds-spec-grid>
+        
+        <!-- Loading State -->
+        <div *ngIf="loadingStats()" class="vds-card loading-state">
+          <div class="spinner"></div>
+          <p>Loading specifications...</p>
+        </div>
+
+        <!-- Error State -->
+        <div *ngIf="statsError()" class="vds-card error-state">
+          <p>⚠️ {{ statsError() }}</p>
+          <button (click)="retryLoadStats()" class="btn">Retry</button>
+        </div>
+        <!-- Stats Loaded - driven from API via signal -->
+        <vds-spec-grid 
+          *ngIf="!loadingStats() && !statsError()" 
+          [specs]="specs()">
+        </vds-spec-grid>
 
         <div class="cta vds-card">
           <a routerLink="/codex" class="btn">View in Codex</a>

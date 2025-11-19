@@ -39,7 +39,62 @@ export type ShieldTypeCode = 'Light' | 'Medium' | 'Heavy' | 'Super' | 'None';
 // From the DB Category column
 export type CategoryCode = 'Station' | 'Engine' | 'City';
 
-// Base catalog entity used by ships, facilities, CX cargo, etc.
+// ===== NEW: Display-only version for stripped seed files =====
+export interface CatalogEntityDisplay {
+  id: string;
+  templateId: number;
+  series: SeriesCode;
+  code: string;
+  name: string;
+  role: string;
+  summary: string;
+  description: string;
+  tags: string[];
+  class?: string;
+  line?: string;
+}
+
+// ===== NEW: Stats from API =====
+export interface CatalogEntityStats {
+  TemplateID: number;
+  Name: string;
+  UnitType: string;
+  Size: number;
+  BaseHealth: number;
+  BaseShield: number;
+  BaseEnergyProduced: number;
+  BaseEnergyUsed: number;
+  WeaponSlots: number;
+  StaffRequired: number;
+  TotalHousing: number;
+  Speed: number;
+  Atmospheric: boolean;
+  Hyperspace: number;
+  SellPrice: number;
+  ShieldType: string;
+  TechTier: string;
+  MinShipSize: number;
+  MaxShipSize: number;
+  Views: number;
+  Blurring: number;
+  PrefabPath: string;
+  Description: string;
+  DevelopmentTime: number;
+  ConstructionTime: number;
+  ConstructionCost: number;
+  DevelopmentCost: number;
+  Category: string;
+  RequiresPower: boolean;
+  ProvidesPower: boolean;
+  AllowsStockLink: boolean;
+  ProvidesStorage: boolean;
+  IsShip: boolean;
+  ResourceCapacity: number;
+  DockCapacity: number;
+}
+
+
+// ===== ORIGINAL: Full entity with all fields (backward compatible) =====
 export interface CatalogEntityBase {
   id: string;               // kebab-case, e.g., 'vx-5-bastion'
   series: SeriesCode;       // 'VX' | 'CX' | ...
@@ -98,8 +153,19 @@ export interface Ship extends CatalogEntityBase {
   line?: string;            // 'VX-6 Battleship Line', etc.
 }
 
+// ===== NEW: Display-only Ship (for stripped seed files) =====
+export interface ShipDisplay extends CatalogEntityDisplay {
+  class: 'frigate' | 'destroyer' | 'battleship' | 'dreadnought' | 'carrier' | 'cargo' | 'command' | 'other';
+  line?: string;
+}
+
 // Facilities with DB-backed stats + DB subtype mapping
 export interface Facility extends CatalogEntityBase {
+  subtype: 'station' | 'base' | 'gate' | 'warehouse' | 'factory' | 'medical' | 'habitation' | 'power';
+}
+
+// ===== NEW: Display-only Facility =====
+export interface FacilityDisplay extends CatalogEntityDisplay {
   subtype: 'station' | 'base' | 'gate' | 'warehouse' | 'factory' | 'medical' | 'habitation' | 'power';
 }
 
@@ -107,3 +173,4 @@ export interface City extends CatalogEntityBase {
   population?: number;
   world?: string;
 }
+

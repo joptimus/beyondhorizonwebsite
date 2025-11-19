@@ -11,8 +11,8 @@
 <span class="vds-chip vds-code" *ngIf="e.class">
   {{ e.class }}
 </span>
-<span class="vds-chip vds-code" *ngIf="!e.class">
-  {{ e.unitType }}
+<span class="vds-chip vds-code" *ngIf="!e.class && unitTypeLabel()">
+  {{ unitTypeLabel() }}
 </span>
 
 

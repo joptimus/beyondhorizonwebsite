@@ -2,8 +2,7 @@
 import { Component, computed, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonContent, IonSelect, IonSelectOption } from '@ionic/angular/standalone';
-import { SHIPS } from '../../../data/seed-ships'; // adjust path if needed
-import { Ship } from '../../../models/catalog.models';
+import { SHIPS, ShipDisplayData } from '../../../data/seed-ships';
 import { VdsCardComponent } from '../../../components/vds-card/vds-card.component';
 // import { VdsTagListComponent } from '../../../components/vds-tag-list/vds-tag-list.component'; // (still optional/unused)
 
@@ -15,21 +14,20 @@ import { VdsCardComponent } from '../../../components/vds-card/vds-card.componen
   styleUrls: ['./ships-list.page.scss']
 })
 export class ShipsListPage {
-  ships = SHIPS;
-  classFilter = signal<string>('');
-  lineFilter = signal<string>('');
-  lines = Array.from(new Set(this.ships.map(s => s.line).filter(Boolean))) as string[];
+  ships: ShipDisplayData[] = SHIPS;
+
+  classFilter = signal<string | null>(null);
+
   classes = Array.from(new Set(this.ships.map(s => s.class)));
 
   list = computed(() =>
     this.ships.filter(s =>
-      (!this.classFilter() || s.class === this.classFilter()) &&
-      (!this.lineFilter() || s.line === this.lineFilter())
+      (!this.classFilter() || s.class === this.classFilter())
     )
   );
 
-  // Build tags array in TS to avoid template casting/parsing issues
-  tagsOf(s: Ship): string[] {
+  // Now the parameter type matches what *s* actually is
+  tagsOf(s: ShipDisplayData): string[] {
     return [String(s.class), ...(s.tags || [])];
   }
 }

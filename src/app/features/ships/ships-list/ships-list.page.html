@@ -7,10 +7,10 @@
         <ion-select-option value="">All</ion-select-option>
         <ion-select-option *ngFor="let c of classes" [value]="c">{{c}}</ion-select-option>
       </ion-select>
-      <ion-select label="Line" interface="popover" (ionChange)="lineFilter.set($event.detail.value||'')">
+      <!-- <ion-select label="Line" interface="popover" (ionChange)="lineFilter.set($event.detail.value||'')">
         <ion-select-option value="">All</ion-select-option>
         <ion-select-option *ngFor="let l of lines" [value]="l">{{l}}</ion-select-option>
-      </ion-select>
+      </ion-select> -->
     </div>
 
     <div class="grid">
